@@ -1953,7 +1953,6 @@
 
         function printOrder(orderId) {
             const order = appData.orders.find(o => o.id === orderId);
-            const customer = appData.customers.find(c => c.id === order.customerId);
             const linkedMeasurement = order.linkedMeasurementId ? 
                 appData.measurements.find(m => m.id === order.linkedMeasurementId) : null;
             
@@ -1963,18 +1962,18 @@
             if (linkedMeasurement) {
                 measurementPrintHtml = `
                     <div class="section">
-                        <h3>Measurements (${linkedMeasurement.type} - ${new Date(linkedMeasurement.date).toLocaleDateString()})</h3>
-                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px;">
-                            ${linkedMeasurement.bust ? `<p><strong>Bust:</strong> ${linkedMeasurement.bust}"</p>` : ''}
-                            ${linkedMeasurement.waist ? `<p><strong>Waist:</strong> ${linkedMeasurement.waist}"</p>` : ''}
-                            ${linkedMeasurement.hips ? `<p><strong>Hips:</strong> ${linkedMeasurement.hips}"</p>` : ''}
-                            ${linkedMeasurement.shoulder ? `<p><strong>Shoulder:</strong> ${linkedMeasurement.shoulder}"</p>` : ''}
-                            ${linkedMeasurement.armLength ? `<p><strong>Arm Length:</strong> ${linkedMeasurement.armLength}"</p>` : ''}
-                            ${linkedMeasurement.neck ? `<p><strong>Neck:</strong> ${linkedMeasurement.neck}"</p>` : ''}
-                            ${linkedMeasurement.inseam ? `<p><strong>Inseam:</strong> ${linkedMeasurement.inseam}"</p>` : ''}
-                            ${linkedMeasurement.height ? `<p><strong>Height:</strong> ${linkedMeasurement.height}"</p>` : ''}
+                        <h3>Measurements (${linkedMeasurement.type})</h3>
+                        <div class="measurement-grid">
+                            ${linkedMeasurement.bust ? `<div><strong>Bust:</strong> ${linkedMeasurement.bust}"</div>` : ''}
+                            ${linkedMeasurement.waist ? `<div><strong>Waist:</strong> ${linkedMeasurement.waist}"</div>` : ''}
+                            ${linkedMeasurement.hips ? `<div><strong>Hips:</strong> ${linkedMeasurement.hips}"</div>` : ''}
+                            ${linkedMeasurement.shoulder ? `<div><strong>Shoulder:</strong> ${linkedMeasurement.shoulder}"</div>` : ''}
+                            ${linkedMeasurement.armLength ? `<div><strong>Arm:</strong> ${linkedMeasurement.armLength}"</div>` : ''}
+                            ${linkedMeasurement.neck ? `<div><strong>Neck:</strong> ${linkedMeasurement.neck}"</div>` : ''}
+                            ${linkedMeasurement.inseam ? `<div><strong>Inseam:</strong> ${linkedMeasurement.inseam}"</div>` : ''}
+                            ${linkedMeasurement.height ? `<div><strong>Height:</strong> ${linkedMeasurement.height}"</div>` : ''}
                         </div>
-                        ${linkedMeasurement.notes ? `<p style="margin-top: 10px;"><strong>Measurement Notes:</strong> ${linkedMeasurement.notes}</p>` : ''}
+                        ${linkedMeasurement.notes ? `<p><strong>Notes:</strong> ${linkedMeasurement.notes}</p>` : ''}
                     </div>
                 `;
             }
@@ -1982,40 +1981,96 @@
             const printContent = `
                 <html>
                 <head>
-                    <title>Order #${order.id} - Life n Style</title>
+                    <title>Order #${order.id}</title>
                     <style>
-                        body { font-family: Arial, sans-serif; margin: 20px; }
-                        .header { text-align: center; margin-bottom: 30px; }
-                        .details { margin-bottom: 20px; }
-                        .section { margin-bottom: 15px; }
-                        h1 { color: #4f46e5; }
-                        h3 { border-bottom: 1px solid #ddd; padding-bottom: 5px; }
-                        .measurement-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+                        @page { 
+                            size: A5; 
+                            margin: 10mm;
+                        }
+                        body { 
+                            font-family: Arial, sans-serif; 
+                            font-size: 11px;
+                            line-height: 1.3;
+                            margin: 0;
+                            padding: 0;
+                        }
+                        .header { 
+                            text-align: center; 
+                            margin-bottom: 15px;
+                            border-bottom: 2px solid #333;
+                            padding-bottom: 8px;
+                        }
+                        .header h1 { 
+                            color: #333; 
+                            font-size: 18px;
+                            margin: 0 0 3px 0;
+                        }
+                        .header h2 { 
+                            font-size: 14px;
+                            margin: 0;
+                            color: #666;
+                        }
+                        .section { 
+                            margin-bottom: 12px;
+                        }
+                        .section h3 { 
+                            font-size: 12px;
+                            border-bottom: 1px solid #ccc; 
+                            padding-bottom: 2px;
+                            margin: 0 0 6px 0;
+                            color: #333;
+                        }
+                        .section p, .section div { 
+                            margin: 3px 0;
+                            font-size: 10px;
+                        }
+                        .measurement-grid { 
+                            display: grid; 
+                            grid-template-columns: repeat(3, 1fr); 
+                            gap: 4px;
+                            font-size: 9px;
+                        }
+                        .measurement-grid div {
+                            background: #f5f5f5;
+                            padding: 3px 5px;
+                            border-radius: 2px;
+                        }
+                        .order-info {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 8px;
+                            font-size: 10px;
+                        }
+                        .order-info div {
+                            margin: 2px 0;
+                        }
+                        strong { color: #333; }
                     </style>
                 </head>
                 <body>
                     <div class="header">
                         <h1>Life n Style</h1>
                         <h2>Order #${order.id}</h2>
-                        <p><strong>Customer:</strong> ${customer ? customer.name : 'Unknown'} | <strong>Phone:</strong> ${customer ? customer.phone : 'N/A'}</p>
                     </div>
-                    <div class="details">
-                        <div class="section">
-                            <h3>Order Information</h3>
-                            <p><strong>Order ID:</strong> #${order.id}</p>
-                            <p><strong>Garment Type:</strong> ${order.garmentType}</p>
-                            <p><strong>Amount:</strong> ₹${order.amount.toLocaleString()}</p>
-                            <p><strong>Status:</strong> ${order.status.replace('-', ' ')}</p>
-                            <p><strong>Order Date:</strong> ${new Date(order.orderDate).toLocaleDateString()}</p>
-                            <p><strong>Delivery Date:</strong> ${new Date(order.deliveryDate).toLocaleDateString()}</p>
+                    
+                    <div class="section">
+                        <h3>Order Details</h3>
+                        <div class="order-info">
+                            <div><strong>Garment:</strong> ${order.garmentType}</div>
+                            <div><strong>Amount:</strong> ₹${order.amount.toLocaleString()}</div>
+                            <div><strong>Status:</strong> ${order.status.replace('-', ' ')}</div>
+                            <div><strong>Order Date:</strong> ${new Date(order.orderDate).toLocaleDateString()}</div>
+                            <div><strong>Delivery:</strong> ${new Date(order.deliveryDate).toLocaleDateString()}</div>
                         </div>
-                        ${measurementPrintHtml}
-                        ${order.notes ? `
-                        <div class="section">
-                            <h3>Order Notes & Requirements</h3>
-                            <p>${order.notes}</p>
-                        </div>` : ''}
                     </div>
+                    
+                    ${measurementPrintHtml}
+                    
+                    ${order.notes ? `
+                    <div class="section">
+                        <h3>Notes</h3>
+                        <p style="font-size: 10px;">${order.notes}</p>
+                    </div>` : ''}
                 </body>
                 </html>
             `;
