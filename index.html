@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boutique Management System</title>
+    <title>Life n Style - Boutique Management System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
@@ -25,13 +25,11 @@
             --success-light: #ecfdf5;
             --error: #ef4444;
             --error-light: #fef2f2;
+            --warning: #f59e0b;
+            --warning-light: #fffbeb;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -99,11 +97,11 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            background: var(--success-light);
-            color: var(--success);
             border-radius: 0.5rem;
             font-size: 0.875rem;
             font-weight: 500;
+            background: var(--success-light);
+            color: var(--success);
         }
 
         .status-dot {
@@ -362,6 +360,12 @@
             cursor: pointer;
             transition: all 0.2s ease;
             text-decoration: none;
+            position: relative;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .btn-primary {
@@ -369,7 +373,7 @@
             color: white;
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             background: var(--primary-dark);
             transform: translateY(-1px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
@@ -380,24 +384,39 @@
             color: var(--gray-700);
         }
 
-        .btn-secondary:hover {
+        .btn-secondary:hover:not(:disabled) {
             background: var(--gray-200);
+        }
+
+        .loading-spinner {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .alert {
             padding: 1rem 1.5rem;
             border-radius: 0.75rem;
-            margin-bottom: 1.5rem;
+            margin: 1rem 0;
             display: flex;
             align-items: center;
             gap: 0.75rem;
             font-weight: 500;
             animation: slideIn 0.3s ease;
+            position: relative;
+            z-index: 100;
         }
 
         @keyframes slideIn {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .alert-success {
@@ -410,6 +429,18 @@
             background: var(--error-light);
             color: var(--error);
             border: 1px solid #fecaca;
+        }
+
+        .alert-warning {
+            background: var(--warning-light);
+            color: var(--warning);
+            border: 1px solid #fed7aa;
+        }
+
+        .alert-info {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid #c7d2fe;
         }
 
         .data-table {
@@ -498,6 +529,57 @@
             font-size: 0.875rem;
         }
 
+        .customer-measurements {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-200);
+            display: none;
+        }
+
+        .customer-measurements.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .measurement-item {
+            background: var(--gray-50);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .measurement-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .measurement-date {
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .measurement-values {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .measurement-value {
+            background: white;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+
         .measurement-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -550,20 +632,16 @@
                 gap: 1rem;
                 padding: 1rem;
             }
-
             .sidebar {
                 position: relative;
                 top: 0;
             }
-
             .header {
                 padding: 1rem;
             }
-
             .dashboard-grid {
                 grid-template-columns: 1fr;
             }
-
             .form-grid {
                 grid-template-columns: 1fr;
             }
@@ -577,7 +655,7 @@
             <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">✂️</div>
-                    <span class="logo-text">Boutique Pro</span>
+                    <span class="logo-text">Life n Style</span>
                 </div>
                 <div class="header-actions">
                     <div class="status-indicator">
@@ -622,23 +700,21 @@
                 <div class="quick-stats">
                     <div class="stat-item">
                         <span class="stat-label">Total Customers</span>
-                        <span class="stat-value" id="sidebar-customers">0</span>
+                        <span class="stat-value" id="sidebar-customers">3</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">This Month</span>
-                        <span class="stat-value" id="sidebar-month">0</span>
+                        <span class="stat-value" id="sidebar-month">2</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Measurements</span>
-                        <span class="stat-value" id="sidebar-measurements">0</span>
+                        <span class="stat-value" id="sidebar-measurements">2</span>
                     </div>
                 </div>
             </aside>
 
             <!-- Content Area -->
             <main class="content">
-                <div id="alert-container"></div>
-
                 <!-- Dashboard Section -->
                 <section id="dashboard" class="section active">
                     <div class="content-header">
@@ -646,13 +722,15 @@
                         <p class="content-subtitle">Welcome to your boutique management system. Here's your business overview.</p>
                     </div>
 
+                    <div id="dashboard-alerts"></div>
+
                     <div class="dashboard-grid">
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <h3 class="card-title">Total Customers</h3>
                                 <div class="card-icon">👥</div>
                             </div>
-                            <div class="card-value" id="dash-customers">0</div>
+                            <div class="card-value" id="dash-customers">3</div>
                             <p class="card-subtitle">Active customer database</p>
                         </div>
 
@@ -661,7 +739,7 @@
                                 <h3 class="card-title">This Month</h3>
                                 <div class="card-icon">📈</div>
                             </div>
-                            <div class="card-value" id="dash-month">0</div>
+                            <div class="card-value" id="dash-month">2</div>
                             <p class="card-subtitle">New customers added</p>
                         </div>
 
@@ -670,7 +748,7 @@
                                 <h3 class="card-title">Measurements</h3>
                                 <div class="card-icon">📏</div>
                             </div>
-                            <div class="card-value" id="dash-measurements">0</div>
+                            <div class="card-value" id="dash-measurements">2</div>
                             <p class="card-subtitle">Total measurements taken</p>
                         </div>
 
@@ -698,6 +776,8 @@
                         <p class="content-subtitle">Create a comprehensive customer profile with contact details and preferences.</p>
                     </div>
 
+                    <div id="customer-alerts"></div>
+
                     <form id="customer-form" class="form-container">
                         <div class="form-grid">
                             <div class="form-group">
@@ -721,7 +801,7 @@
                             <label class="form-label">Notes & Preferences</label>
                             <textarea id="customer-notes" class="form-input form-textarea" placeholder="Fabric preferences, allergies, special requirements..." rows="3"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" id="customer-submit-btn">
                             <span>👤</span> Add Customer
                         </button>
                     </form>
@@ -734,16 +814,18 @@
                         <p class="content-subtitle">Search and manage all your customers with their complete measurement history.</p>
                     </div>
 
+                    <div id="customer-list-alerts"></div>
+
                     <div class="data-table">
                         <div class="table-header">
                             <h3 class="table-title">All Customers</h3>
                             <div class="search-box">
                                 <span style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--gray-400);">🔍</span>
-                                <input type="text" id="search-customers" class="search-input" placeholder="Search customers...">
+                                <input type="text" id="search-customers" class="search-input" placeholder="Search customers..." oninput="searchCustomers(this.value)">
                             </div>
                         </div>
                         <div class="table-content" id="customer-list">
-                            <!-- Customers will be displayed here -->
+                            <!-- Sample customers will be displayed here -->
                         </div>
                     </div>
                 </section>
@@ -755,7 +837,9 @@
                         <p class="content-subtitle">Record detailed measurements for a customer's order.</p>
                     </div>
 
-                    <form id="measurement-form" class="form-container">
+                    <div id="measurement-alerts"></div>
+
+                    <form id="measurement-form" class="form-container" onsubmit="handleMeasurementSubmit(event)">
                         <div class="form-grid">
                             <div class="form-group">
                                 <label class="form-label">Select Customer *</label>
@@ -788,11 +872,6 @@
                             <div class="measurement-card">
                                 <label>Bust/Chest (inches)</label>
                                 <input type="number" id="bust" class="measurement-input" step="0.25" placeholder="34.5">
-                                <span class="measurement-unit">inches</span>
-                            </div>
-                            <div class="measurement-card">
-                                <label>Waist (inches)</label>
-                                <input type="number" id="waist" class="measurement-input" step="0.25" placeholder="28.0">
                                 <span class="measurement-unit">inches</span>
                             </div>
                             <div class="measurement-card">
@@ -832,7 +911,7 @@
                             <textarea id="measurement-notes" class="form-input form-textarea" placeholder="Special instructions, fitting preferences, design details..." rows="4"></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" id="measurement-submit-btn">
                             <span>💾</span> Save Measurements
                         </button>
                     </form>
@@ -842,314 +921,595 @@
     </div>
 
     <script>
-        // Clean data storage
-        var appData = {
-            customers: [],
-            measurements: [],
-            nextId: 1
-        };
+        console.log('🚀 Life n Style Management System Loading...');
 
-        // Initialize sample data
-        function initData() {
-            appData.customers = [
+        // Sample data
+        const sampleData = {
+            customers: [
                 { id: 1, name: "Priya Sharma", phone: "+91 9876543210", email: "priya@email.com", address: "123 MG Road, Bangalore", notes: "Prefers silk fabrics", dateAdded: "2024-01-15" },
                 { id: 2, name: "Anita Gupta", phone: "+91 9876543211", email: "anita@email.com", address: "456 Commercial Street, Bangalore", notes: "Likes contemporary designs", dateAdded: "2024-02-01" },
                 { id: 3, name: "Meera Reddy", phone: "+91 9876543212", email: "meera@email.com", address: "789 Brigade Road, Bangalore", notes: "Traditional designs preferred", dateAdded: "2024-02-10" }
-            ];
-
-            appData.measurements = [
+            ],
+            measurements: [
                 { id: 1, customerId: 1, date: "2024-01-20", type: "Blouse", bust: 36, waist: 28, hips: 38, height: 65, notes: "Wedding blouse, deep neck design" },
                 { id: 2, customerId: 2, date: "2024-02-05", type: "Dress", bust: 34, waist: 26, hips: 36, height: 62, notes: "Office wear, professional look" }
-            ];
+            ],
+            nextId: 4
+        };
 
-            appData.nextId = 4;
+        // Application state
+        let appData = { ...sampleData };
+
+        // Utility functions
+        function showAlert(message, type = 'success', containerId = 'dashboard-alerts') {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            const icon = type === 'error' ? '❌' : type === 'warning' ? '⚠️' : type === 'info' ? 'ℹ️' : '✅';
+            alert.innerHTML = `<span>${icon}</span><span>${message}</span>`;
+            
+            container.appendChild(alert);
+            
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.remove();
+                }
+            }, 5000);
+        }
+
+        function setButtonLoading(buttonId, loading = true) {
+            const button = document.getElementById(buttonId);
+            if (!button) return;
+
+            if (loading) {
+                button.disabled = true;
+                const originalContent = button.innerHTML;
+                button.dataset.originalContent = originalContent;
+                button.innerHTML = '<div class="loading-spinner"></div> Processing...';
+            } else {
+                button.disabled = false;
+                if (button.dataset.originalContent) {
+                    button.innerHTML = button.dataset.originalContent;
+                }
+            }
+        }
+
+        function isPhoneUnique(phone, excludeId = null) {
+            return !appData.customers.some(customer => 
+                customer.phone === phone && customer.id !== excludeId
+            );
         }
 
         // Navigation function
         function showSection(sectionId) {
-            // Remove active from nav items
-            document.querySelectorAll('.nav-item').forEach(function(item) {
-                item.classList.remove('active');
-            });
+            console.log('📍 Switching to section:', sectionId);
             
-            // Add active to clicked item
-            if (event && event.target) {
-                var navItem = event.target.closest('.nav-item');
-                if (navItem) navItem.classList.add('active');
-            }
-
-            // Hide all sections
-            document.querySelectorAll('.section').forEach(function(section) {
-                section.classList.remove('active');
-            });
-            
-            // Show selected section
-            var targetSection = document.getElementById(sectionId);
-            if (targetSection) {
-                targetSection.classList.add('active');
-            }
-
-            // Update content
-            if (sectionId === 'customers') {
-                displayCustomers();
-            } else if (sectionId === 'dashboard') {
-                updateDashboard();
-            }
-        }
-
-        // Show alerts
-        function showAlert(message, type) {
-            var container = document.getElementById('alert-container');
-            var alert = document.createElement('div');
-            alert.className = 'alert alert-' + (type || 'success');
-            alert.innerHTML = '<span>' + (type === 'error' ? '❌' : '✅') + '</span><span>' + message + '</span>';
-            container.appendChild(alert);
-            setTimeout(function() {
-                if (alert.parentNode) alert.remove();
-            }, 5000);
-        }
-
-        // Update dashboard
-        function updateDashboard() {
-            var totalCustomers = appData.customers.length;
-            var totalMeasurements = appData.measurements.length;
-            var thisMonth = appData.customers.filter(function(c) {
-                return c.dateAdded.startsWith('2024-02');
-            }).length;
-
-            // Update all dashboard elements
-            var elements = [
-                { id: 'sidebar-customers', value: totalCustomers },
-                { id: 'sidebar-measurements', value: totalMeasurements },
-                { id: 'sidebar-month', value: thisMonth },
-                { id: 'dash-customers', value: totalCustomers },
-                { id: 'dash-measurements', value: totalMeasurements },
-                { id: 'dash-month', value: thisMonth }
-            ];
-
-            elements.forEach(function(item) {
-                var element = document.getElementById(item.id);
-                if (element) element.textContent = item.value;
-            });
-        }
-
-        // Display customers
-        function displayCustomers() {
-            var container = document.getElementById('customer-list');
-            container.innerHTML = '';
-
-            appData.customers.forEach(function(customer) {
-                var customerMeasurements = appData.measurements.filter(function(m) {
-                    return m.customerId === customer.id;
+            try {
+                // Remove active from all nav items
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    if (item && item.classList) {
+                        item.classList.remove('active');
+                    }
                 });
                 
-                var div = document.createElement('div');
+                // Add active to clicked nav item
+                if (event && event.target) {
+                    const navItem = event.target.closest('.nav-item');
+                    if (navItem && navItem.classList) {
+                        navItem.classList.add('active');
+                    }
+                }
+
+                // Hide all sections
+                document.querySelectorAll('.section').forEach(section => {
+                    if (section && section.classList) {
+                        section.classList.remove('active');
+                    }
+                });
+                
+                // Show target section
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection && targetSection.classList) {
+                    targetSection.classList.add('active');
+                    console.log('✅ Section shown:', sectionId);
+                } else {
+                    console.error('❌ Section not found:', sectionId);
+                }
+
+                // Update section-specific content
+                if (sectionId === 'customers') {
+                    displayCustomers();
+                } else if (sectionId === 'measurements') {
+                    console.log('🔄 Updating customer dropdown for measurements section');
+                    updateCustomerDropdown();
+                }
+                
+            } catch (error) {
+                console.error('❌ Error in showSection:', error);
+            }
+        }
+
+        // Customer functions
+        function handleCustomerSubmit() {
+            console.log('👤 Customer form submitted');
+            
+            setButtonLoading('customer-submit-btn', true);
+            
+            const name = document.getElementById('customer-name').value.trim();
+            const phone = document.getElementById('customer-phone').value.trim();
+            
+            if (!name || !phone) {
+                showAlert('Please fill in required fields!', 'error', 'customer-alerts');
+                setButtonLoading('customer-submit-btn', false);
+                return;
+            }
+            
+            if (!isPhoneUnique(phone)) {
+                showAlert('Phone number already exists! Please use a different number.', 'error', 'customer-alerts');
+                setButtonLoading('customer-submit-btn', false);
+                return;
+            }
+            
+            const customer = {
+                id: appData.nextId++,
+                name: name,
+                phone: phone,
+                email: document.getElementById('customer-email').value.trim(),
+                address: document.getElementById('customer-address').value.trim(),
+                notes: document.getElementById('customer-notes').value.trim(),
+                dateAdded: new Date().toISOString().split('T')[0]
+            };
+            
+            appData.customers.push(customer);
+            
+            // Reset form
+            document.getElementById('customer-form').reset();
+            
+            // Update UI
+            updateDashboard();
+            updateCustomerDropdown();
+            
+            setButtonLoading('customer-submit-btn', false);
+            showAlert(`Customer "${customer.name}" added successfully!`, 'success', 'customer-alerts');
+            
+            console.log('✅ Customer added:', customer);
+        }
+
+        function displayCustomers() {
+            const container = document.getElementById('customer-list');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            appData.customers.forEach(customer => {
+                const customerMeasurements = appData.measurements.filter(m => m.customerId === customer.id);
+                
+                const div = document.createElement('div');
                 div.className = 'customer-item';
-                div.innerHTML = 
-                    '<div class="customer-header">' +
-                        '<h4 class="customer-name">' + customer.name + '</h4>' +
-                        '<span class="customer-badge">' + customerMeasurements.length + ' measurement(s)</span>' +
-                    '</div>' +
-                    '<div class="customer-details">' +
-                        '<div><strong>Phone:</strong> ' + customer.phone + '</div>' +
-                        '<div><strong>Email:</strong> ' + (customer.email || 'N/A') + '</div>' +
-                        '<div><strong>Address:</strong> ' + (customer.address || 'N/A') + '</div>' +
-                        '<div><strong>Notes:</strong> ' + (customer.notes || 'N/A') + '</div>' +
-                    '</div>';
+                div.onclick = () => toggleCustomerDetails(customer.id);
+                
+                const measurementsHtml = buildMeasurementsHTML(customerMeasurements);
+                
+                div.innerHTML = `
+                    <div class="customer-header">
+                        <h4 class="customer-name">${customer.name}</h4>
+                        <span class="customer-badge">${customerMeasurements.length} measurement(s)</span>
+                    </div>
+                    <div class="customer-details">
+                        <div><strong>Phone:</strong> ${customer.phone}</div>
+                        <div><strong>Email:</strong> ${customer.email || 'N/A'}</div>
+                        <div><strong>Address:</strong> ${customer.address || 'N/A'}</div>
+                        <div><strong>Notes:</strong> ${customer.notes || 'N/A'}</div>
+                    </div>
+                    <div class="customer-measurements" id="customer-measurements-${customer.id}">
+                        <h5 style="margin-bottom: 1rem; color: var(--gray-700);">Measurement History</h5>
+                        ${measurementsHtml}
+                    </div>
+                `;
                 
                 container.appendChild(div);
             });
         }
 
-        // Update customer dropdown
-        function updateCustomerDropdown() {
-            var select = document.getElementById('measurement-customer');
-            select.innerHTML = '<option value="">Choose a customer...</option>';
+        function buildMeasurementsHTML(measurements) {
+            if (measurements.length === 0) {
+                return '<p style="color: var(--gray-500); font-style: italic;">No measurements recorded yet.</p>';
+            }
+
+            return measurements.map(measurement => {
+                const values = [];
+                if (measurement.bust) values.push(`<div class="measurement-value"><strong>Bust:</strong> ${measurement.bust}"</div>`);
+                if (measurement.waist) values.push(`<div class="measurement-value"><strong>Waist:</strong> ${measurement.waist}"</div>`);
+                if (measurement.hips) values.push(`<div class="measurement-value"><strong>Hips:</strong> ${measurement.hips}"</div>`);
+                if (measurement.shoulder) values.push(`<div class="measurement-value"><strong>Shoulder:</strong> ${measurement.shoulder}"</div>`);
+                if (measurement.armLength) values.push(`<div class="measurement-value"><strong>Arm Length:</strong> ${measurement.armLength}"</div>`);
+                if (measurement.neck) values.push(`<div class="measurement-value"><strong>Neck:</strong> ${measurement.neck}"</div>`);
+                if (measurement.inseam) values.push(`<div class="measurement-value"><strong>Inseam:</strong> ${measurement.inseam}"</div>`);
+                if (measurement.height) values.push(`<div class="measurement-value"><strong>Height:</strong> ${measurement.height}"</div>`);
+                
+                return `
+                    <div class="measurement-item">
+                        <div class="measurement-header">
+                            <strong>${measurement.type}</strong>
+                            <span class="measurement-date">${new Date(measurement.date).toLocaleDateString()}</span>
+                        </div>
+                        <div class="measurement-values">${values.join('')}</div>
+                        ${measurement.notes ? `<p><strong>Notes:</strong> ${measurement.notes}</p>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleCustomerDetails(customerId) {
+            const detailsElement = document.getElementById(`customer-measurements-${customerId}`);
+            if (!detailsElement) {
+                console.warn('Customer details element not found for ID:', customerId);
+                return;
+            }
+
+            if (detailsElement.classList.contains('show')) {
+                detailsElement.classList.remove('show');
+            } else {
+                // Hide all other open details first
+                document.querySelectorAll('.customer-measurements.show').forEach(el => {
+                    if (el && el.classList) {
+                        el.classList.remove('show');
+                    }
+                });
+                detailsElement.classList.add('show');
+            }
+        }
+
+        function searchCustomers(query) {
+            if (!query.trim()) {
+                displayCustomers();
+                return;
+            }
+
+            const filtered = appData.customers.filter(customer =>
+                customer.name.toLowerCase().includes(query.toLowerCase()) ||
+                customer.phone.toLowerCase().includes(query.toLowerCase()) ||
+                (customer.email && customer.email.toLowerCase().includes(query.toLowerCase()))
+            );
             
-            appData.customers.forEach(function(customer) {
-                var option = document.createElement('option');
-                option.value = customer.id;
-                option.textContent = customer.name + ' (' + customer.phone + ')';
-                select.appendChild(option);
+            const container = document.getElementById('customer-list');
+            container.innerHTML = '';
+            
+            filtered.forEach(customer => {
+                const customerMeasurements = appData.measurements.filter(m => m.customerId === customer.id);
+                
+                const div = document.createElement('div');
+                div.className = 'customer-item';
+                div.onclick = () => toggleCustomerDetails(customer.id);
+                
+                const measurementsHtml = buildMeasurementsHTML(customerMeasurements);
+                
+                div.innerHTML = `
+                    <div class="customer-header">
+                        <h4 class="customer-name">${customer.name}</h4>
+                        <span class="customer-badge">${customerMeasurements.length} measurement(s)</span>
+                    </div>
+                    <div class="customer-details">
+                        <div><strong>Phone:</strong> ${customer.phone}</div>
+                        <div><strong>Email:</strong> ${customer.email || 'N/A'}</div>
+                        <div><strong>Address:</strong> ${customer.address || 'N/A'}</div>
+                        <div><strong>Notes:</strong> ${customer.notes || 'N/A'}</div>
+                    </div>
+                    <div class="customer-measurements" id="customer-measurements-${customer.id}">
+                        <h5 style="margin-bottom: 1rem; color: var(--gray-700);">Measurement History</h5>
+                        ${measurementsHtml}
+                    </div>
+                `;
+                
+                container.appendChild(div);
             });
         }
 
-        // Export data
+        // Measurement functions
+        function handleMeasurementSubmit() {
+            console.log('🚨 MEASUREMENT FUNCTION CALLED - This should appear first!');
+            console.log('📏 Measurement form submitted');
+            
+            setButtonLoading('measurement-submit-btn', true);
+            
+            // Get form values with debugging
+            const customerSelect = document.getElementById('measurement-customer');
+            const dateField = document.getElementById('measurement-date');
+            const typeField = document.getElementById('measurement-type');
+            
+            console.log('🔍 Form elements check:');
+            console.log('Customer select element:', customerSelect);
+            console.log('Date field element:', dateField);
+            console.log('Type field element:', typeField);
+            
+            if (!customerSelect) {
+                console.error('❌ Customer select element not found!');
+                showAlert('Form error: Customer dropdown not found!', 'error', 'measurement-alerts');
+                setButtonLoading('measurement-submit-btn', false);
+                return;
+            }
+            
+            if (!dateField) {
+                console.error('❌ Date field element not found!');
+                showAlert('Form error: Date field not found!', 'error', 'measurement-alerts');
+                setButtonLoading('measurement-submit-btn', false);
+                return;
+            }
+            
+            if (!typeField) {
+                console.error('❌ Type field element not found!');
+                showAlert('Form error: Type field not found!', 'error', 'measurement-alerts');
+                setButtonLoading('measurement-submit-btn', false);
+                return;
+            }
+            
+            console.log('Customer select value:', customerSelect.value);
+            console.log('Date field value:', dateField.value);
+            console.log('Type field value:', typeField.value);
+            
+            const customerId = parseInt(customerSelect.value);
+            const date = dateField.value;
+            const type = typeField.value;
+            
+            if (!customerId || isNaN(customerId)) {
+                console.log('❌ Validation failed: No customer selected');
+                showAlert('Please select a customer!', 'error', 'measurement-alerts');
+                setButtonLoading('measurement-submit-btn', false);
+                return;
+            }
+            if (!date) {
+                console.log('❌ Validation failed: No date selected');
+                showAlert('Please select a date!', 'error', 'measurement-alerts');
+                setButtonLoading('measurement-submit-btn', false);
+                return;
+            }
+            if (!type) {
+                console.log('❌ Validation failed: No type selected');
+                showAlert('Please select a garment type!', 'error', 'measurement-alerts');
+                setButtonLoading('measurement-submit-btn', false);
+                return;
+            }
+            
+            console.log('✅ Validation passed, creating measurement...');
+            
+            // Get measurement values
+            const bustField = document.getElementById('bust');
+            const waistField = document.getElementById('waist');
+            const hipsField = document.getElementById('hips');
+            
+            console.log('Measurement fields found:', {
+                bust: bustField ? 'YES' : 'NO',
+                waist: waistField ? 'YES' : 'NO',
+                hips: hipsField ? 'YES' : 'NO'
+            });
+            
+            const measurement = {
+                id: appData.nextId++,
+                customerId: customerId,
+                date: date,
+                type: type,
+                bust: bustField ? (parseFloat(bustField.value) || null) : null,
+                waist: waistField ? (parseFloat(waistField.value) || null) : null,
+                hips: hipsField ? (parseFloat(hipsField.value) || null) : null,
+                shoulder: document.getElementById('shoulder') ? (parseFloat(document.getElementById('shoulder').value) || null) : null,
+                armLength: document.getElementById('arm-length') ? (parseFloat(document.getElementById('arm-length').value) || null) : null,
+                neck: document.getElementById('neck') ? (parseFloat(document.getElementById('neck').value) || null) : null,
+                inseam: document.getElementById('inseam') ? (parseFloat(document.getElementById('inseam').value) || null) : null,
+                height: document.getElementById('height') ? (parseFloat(document.getElementById('height').value) || null) : null,
+                notes: document.getElementById('measurement-notes') ? document.getElementById('measurement-notes').value.trim() : ''
+            };
+            
+            console.log('📋 Creating measurement object:', measurement);
+            
+            try {
+                appData.measurements.push(measurement);
+                console.log('✅ Measurement added to array');
+                console.log('📊 Total measurements now:', appData.measurements.length);
+                
+                const customer = appData.customers.find(c => c.id === customerId);
+                console.log('👤 Customer found:', customer);
+                
+                // Reset form but keep today's date
+                document.getElementById('measurement-form').reset();
+                document.getElementById('measurement-date').value = new Date().toISOString().split('T')[0];
+                console.log('🔄 Form reset');
+                
+                // Update UI
+                updateDashboard();
+                updateCustomerDropdown(); // Repopulate dropdown
+                console.log('📊 UI updated');
+                
+                setButtonLoading('measurement-submit-btn', false);
+                showAlert(`Measurements saved for ${customer ? customer.name : 'customer'}!`, 'success', 'measurement-alerts');
+                
+                console.log('🎉 SUCCESS: Measurement saved successfully!');
+                
+            } catch (error) {
+                console.error('💥 ERROR saving measurement:', error);
+                showAlert('Error saving measurement: ' + error.message, 'error', 'measurement-alerts');
+                setButtonLoading('measurement-submit-btn', false);
+            }
+        }
+
+        function updateCustomerDropdown() {
+            const select = document.getElementById('measurement-customer');
+            if (!select) {
+                console.warn('Customer dropdown not found');
+                return;
+            }
+
+            select.innerHTML = '<option value="">Choose a customer...</option>';
+            
+            appData.customers.forEach(customer => {
+                const option = document.createElement('option');
+                option.value = customer.id;
+                option.textContent = `${customer.name} (${customer.phone})`;
+                select.appendChild(option);
+            });
+            
+            console.log('✅ Customer dropdown updated with', appData.customers.length, 'customers');
+        }
+
+        // Dashboard functions
+        function updateDashboard() {
+            const currentMonth = new Date().toISOString().substr(0, 7);
+            const stats = {
+                totalCustomers: appData.customers.length,
+                totalMeasurements: appData.measurements.length,
+                thisMonth: appData.customers.filter(c => c.dateAdded.startsWith(currentMonth)).length
+            };
+            
+            const elements = [
+                { id: 'sidebar-customers', value: stats.totalCustomers },
+                { id: 'sidebar-measurements', value: stats.totalMeasurements },
+                { id: 'sidebar-month', value: stats.thisMonth },
+                { id: 'dash-customers', value: stats.totalCustomers },
+                { id: 'dash-measurements', value: stats.totalMeasurements },
+                { id: 'dash-month', value: stats.thisMonth }
+            ];
+
+            elements.forEach(item => {
+                const element = document.getElementById(item.id);
+                if (element) {
+                    element.textContent = item.value;
+                } else {
+                    console.warn('Dashboard element not found:', item.id);
+                }
+            });
+            
+            console.log('📊 Dashboard updated:', stats);
+        }
+
+        // Export function
         function exportData() {
+            console.log('📥 Export function called');
+            
             if (typeof XLSX === 'undefined') {
-                showAlert('Excel export feature will be available when deployed', 'error');
+                showAlert('Excel export feature requires XLSX library', 'error');
                 return;
             }
             
             try {
-                var wb = XLSX.utils.book_new();
+                const wb = XLSX.utils.book_new();
                 
                 // Customers sheet
-                var customersData = appData.customers.map(function(customer) {
-                    return {
-                        'Customer ID': customer.id,
-                        'Name': customer.name,
-                        'Phone': customer.phone,
-                        'Email': customer.email,
-                        'Address': customer.address,
-                        'Notes': customer.notes,
-                        'Date Added': customer.dateAdded
-                    };
-                });
+                const customersData = appData.customers.map(customer => ({
+                    'Customer ID': customer.id,
+                    'Name': customer.name,
+                    'Phone': customer.phone,
+                    'Email': customer.email || '',
+                    'Address': customer.address || '',
+                    'Notes': customer.notes || '',
+                    'Date Added': customer.dateAdded
+                }));
                 
-                var customersWs = XLSX.utils.json_to_sheet(customersData);
+                const customersWs = XLSX.utils.json_to_sheet(customersData);
                 XLSX.utils.book_append_sheet(wb, customersWs, 'Customers');
                 
                 // Measurements sheet
-                var measurementsData = appData.measurements.map(function(measurement) {
-                    var customer = appData.customers.find(function(c) {
-                        return c.id === measurement.customerId;
-                    });
+                const measurementsData = appData.measurements.map(measurement => {
+                    const customer = appData.customers.find(c => c.id === measurement.customerId);
                     return {
                         'Measurement ID': measurement.id,
                         'Customer Name': customer ? customer.name : 'Unknown',
                         'Date': measurement.date,
                         'Type': measurement.type,
-                        'Bust': measurement.bust,
-                        'Waist': measurement.waist,
-                        'Hips': measurement.hips,
-                        'Height': measurement.height,
-                        'Notes': measurement.notes
+                        'Bust': measurement.bust || '',
+                        'Waist': measurement.waist || '',
+                        'Hips': measurement.hips || '',
+                        'Shoulder': measurement.shoulder || '',
+                        'Arm Length': measurement.armLength || '',
+                        'Neck': measurement.neck || '',
+                        'Inseam': measurement.inseam || '',
+                        'Height': measurement.height || '',
+                        'Notes': measurement.notes || ''
                     };
                 });
                 
-                var measurementsWs = XLSX.utils.json_to_sheet(measurementsData);
+                const measurementsWs = XLSX.utils.json_to_sheet(measurementsData);
                 XLSX.utils.book_append_sheet(wb, measurementsWs, 'Measurements');
                 
-                var filename = 'boutique_data_' + new Date().toISOString().split('T')[0] + '.xlsx';
+                const filename = `life_n_style_data_${new Date().toISOString().split('T')[0]}.xlsx`;
                 XLSX.writeFile(wb, filename);
                 
-                showAlert('Data exported successfully!');
+                showAlert('Data exported successfully! 📊', 'success');
             } catch (error) {
+                console.error('Export error:', error);
                 showAlert('Error exporting data', 'error');
             }
         }
 
-        // Form submissions
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize data
-            initData();
+        // Initialize application
+        window.addEventListener('load', function() {
+            console.log('🎯 Application loaded successfully');
+            
+            // Set today's date
+            const today = new Date().toISOString().split('T')[0];
+            const dateField = document.getElementById('measurement-date');
+            if (dateField) {
+                dateField.value = today;
+                console.log('✅ Date field set to:', today);
+            } else {
+                console.error('❌ Date field not found');
+            }
+            
+            // Initialize UI
             updateDashboard();
             updateCustomerDropdown();
             displayCustomers();
             
-            // Set today's date
-            var today = new Date().toISOString().split('T')[0];
-            var dateField = document.getElementById('measurement-date');
-            if (dateField) dateField.value = today;
-
-            // Customer form
-            var customerForm = document.getElementById('customer-form');
-            if (customerForm) {
-                customerForm.addEventListener('submit', function(e) {
+            // CRITICAL: Add event handlers programmatically
+            console.log('🔧 Setting up event handlers...');
+            
+            // Customer button handler
+            const customerBtn = document.getElementById('customer-submit-btn');
+            if (customerBtn) {
+                customerBtn.addEventListener('click', function(e) {
+                    console.log('🧪 CUSTOMER BUTTON CLICKED PROGRAMMATICALLY!');
                     e.preventDefault();
-                    
-                    var customer = {
-                        id: appData.nextId++,
-                        name: document.getElementById('customer-name').value.trim(),
-                        phone: document.getElementById('customer-phone').value.trim(),
-                        email: document.getElementById('customer-email').value.trim(),
-                        address: document.getElementById('customer-address').value.trim(),
-                        notes: document.getElementById('customer-notes').value.trim(),
-                        dateAdded: new Date().toISOString().split('T')[0]
-                    };
-                    
-                    appData.customers.push(customer);
-                    updateCustomerDropdown();
-                    updateDashboard();
-                    this.reset();
-                    showAlert('Customer "' + customer.name + '" added successfully!');
+                    handleCustomerSubmit();
                 });
-            }
-
-            // Measurement form
-            var measurementForm = document.getElementById('measurement-form');
-            if (measurementForm) {
-                measurementForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    var customerId = parseInt(document.getElementById('measurement-customer').value);
-                    if (!customerId) {
-                        showAlert('Please select a customer!', 'error');
-                        return;
-                    }
-                    
-                    var measurement = {
-                        id: appData.nextId++,
-                        customerId: customerId,
-                        date: document.getElementById('measurement-date').value,
-                        type: document.getElementById('measurement-type').value,
-                        bust: parseFloat(document.getElementById('bust').value) || null,
-                        waist: parseFloat(document.getElementById('waist').value) || null,
-                        hips: parseFloat(document.getElementById('hips').value) || null,
-                        shoulder: parseFloat(document.getElementById('shoulder').value) || null,
-                        armLength: parseFloat(document.getElementById('arm-length').value) || null,
-                        neck: parseFloat(document.getElementById('neck').value) || null,
-                        inseam: parseFloat(document.getElementById('inseam').value) || null,
-                        height: parseFloat(document.getElementById('height').value) || null,
-                        notes: document.getElementById('measurement-notes').value.trim()
-                    };
-                    
-                    appData.measurements.push(measurement);
-                    updateDashboard();
-                    
-                    var customer = appData.customers.find(function(c) {
-                        return c.id === customerId;
-                    });
-                    showAlert('Measurements saved for ' + customer.name + '!');
-                    
-                    // Keep customer selected but reset measurements
-                    var selectedCustomer = document.getElementById('measurement-customer').value;
-                    var selectedDate = document.getElementById('measurement-date').value;
-                    this.reset();
-                    document.getElementById('measurement-customer').value = selectedCustomer;
-                    document.getElementById('measurement-date').value = selectedDate;
-                });
-            }
-
-            // Search customers
-            var searchInput = document.getElementById('search-customers');
-            if (searchInput) {
-                searchInput.addEventListener('input', function() {
-                    var query = this.value.toLowerCase();
-                    var filtered = appData.customers.filter(function(c) {
-                        return c.name.toLowerCase().includes(query) || 
-                               c.phone.includes(query) || 
-                               (c.email && c.email.toLowerCase().includes(query));
-                    });
-                    
-                    var container = document.getElementById('customer-list');
-                    container.innerHTML = '';
-                    
-                    filtered.forEach(function(customer) {
-                        var customerMeasurements = appData.measurements.filter(function(m) {
-                            return m.customerId === customer.id;
-                        });
-                        
-                        var div = document.createElement('div');
-                        div.className = 'customer-item';
-                        div.innerHTML = 
-                            '<div class="customer-header">' +
-                                '<h4 class="customer-name">' + customer.name + '</h4>' +
-                                '<span class="customer-badge">' + customerMeasurements.length + ' measurement(s)</span>' +
-                            '</div>' +
-                            '<div class="customer-details">' +
-                                '<div><strong>Phone:</strong> ' + customer.phone + '</div>' +
-                                '<div><strong>Email:</strong> ' + (customer.email || 'N/A') + '</div>' +
-                                '<div><strong>Address:</strong> ' + (customer.address || 'N/A') + '</div>' +
-                            '</div>';
-                        
-                        container.appendChild(div);
-                    });
-                });
+                console.log('✅ Customer button handler added');
+            } else {
+                console.error('❌ Customer button not found');
             }
             
-            console.log('✅ Boutique Management System loaded successfully!');
+            // Measurement button handler
+            const measurementBtn = document.getElementById('measurement-submit-btn');
+            if (measurementBtn) {
+                measurementBtn.addEventListener('click', function(e) {
+                    console.log('🧪 MEASUREMENT BUTTON CLICKED PROGRAMMATICALLY!');
+                    e.preventDefault();
+                    handleMeasurementSubmit();
+                });
+                console.log('✅ Measurement button handler added');
+            } else {
+                console.error('❌ Measurement button not found');
+            }
+            
+            // Export button handler
+            const exportBtn = document.querySelector('button[onclick*="exportData"]');
+            if (exportBtn) {
+                exportBtn.removeAttribute('onclick'); // Remove inline handler
+                exportBtn.addEventListener('click', function(e) {
+                    console.log('🧪 EXPORT BUTTON CLICKED PROGRAMMATICALLY!');
+                    e.preventDefault();
+                    exportData();
+                });
+                console.log('✅ Export button handler added');
+            }
+            
+            console.log('🎯 All event handlers setup complete!');
+            
+            // Show welcome message
+            setTimeout(() => {
+                showAlert('Welcome to Life n Style! System ready for use. 🎉', 'info', 'dashboard-alerts');
+            }, 1000);
+            
+            console.log('✅ Life n Style Management System Ready!');
+            console.log('Current data:', appData);
         });
     </script>
 </body>
