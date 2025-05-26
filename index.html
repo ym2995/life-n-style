@@ -28,629 +28,109 @@
             --warning: #f59e0b;
             --warning-light: #fffbeb;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: var(--gray-800);
         }
-
-        .app-container {
-            min-height: 100vh;
-            backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 2rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .logo-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            background: var(--success-light);
-            color: var(--success);
-        }
-
-        .status-dot {
-            width: 0.5rem;
-            height: 0.5rem;
-            background: var(--success);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 2rem;
-            min-height: calc(100vh - 80px);
-        }
-
-        .sidebar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            height: fit-content;
-            position: sticky;
-            top: 100px;
-        }
-
-        .nav-section {
-            margin-bottom: 2rem;
-        }
-
-        .nav-title {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--gray-500);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.75rem;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-bottom: 0.25rem;
-            font-weight: 500;
-            color: var(--gray-600);
-        }
-
-        .nav-item:hover {
-            background: var(--gray-50);
-            color: var(--gray-900);
-        }
-
-        .nav-item.active {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-
-        .quick-stats {
-            background: var(--gray-50);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            margin-top: 1rem;
-        }
-
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 0;
-        }
-
-        .stat-item:not(:last-child) {
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-        }
-
-        .stat-value {
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .content {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 1rem;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .content-header {
-            padding: 2rem 2rem 1rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .content-title {
-            font-size: 1.875rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 0.5rem;
-        }
-
-        .content-subtitle {
-            color: var(--gray-600);
-            margin-bottom: 1rem;
-        }
-
-        .section {
-            display: none;
-            padding: 2rem;
-        }
-
-        .section.active {
-            display: block;
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .dashboard-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--gray-200);
-            transition: all 0.3s ease;
-        }
-
-        .dashboard-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .card-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .card-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            background: var(--primary-light);
-            color: var(--primary);
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .card-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 0.5rem;
-        }
-
-        .card-subtitle {
-            color: var(--gray-500);
-            font-size: 0.875rem;
-        }
-
-        .form-container {
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--gray-200);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin-bottom: 0.5rem;
-        }
-
-        .form-input {
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--gray-200);
-            border-radius: 0.75rem;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-            background: white;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-light);
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 0.75rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            position: relative;
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-secondary {
-            background: var(--gray-100);
-            color: var(--gray-700);
-        }
-
-        .btn-secondary:hover:not(:disabled) {
-            background: var(--gray-200);
-        }
-
-        .loading-spinner {
-            width: 1rem;
-            height: 1rem;
-            border: 2px solid transparent;
-            border-top: 2px solid currentColor;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .alert {
-            padding: 1rem 1.5rem;
-            border-radius: 0.75rem;
-            margin: 1rem 0;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 500;
-            animation: slideIn 0.3s ease;
-            position: relative;
-            z-index: 100;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .alert-success {
-            background: var(--success-light);
-            color: var(--success);
-            border: 1px solid #a7f3d0;
-        }
-
-        .alert-error {
-            background: var(--error-light);
-            color: var(--error);
-            border: 1px solid #fecaca;
-        }
-
-        .alert-warning {
-            background: var(--warning-light);
-            color: var(--warning);
-            border: 1px solid #fed7aa;
-        }
-
-        .alert-info {
-            background: var(--primary-light);
-            color: var(--primary);
-            border: 1px solid #c7d2fe;
-        }
-
-        .data-table {
-            background: white;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--gray-200);
-        }
-
-        .table-header {
-            background: var(--gray-50);
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .table-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .search-box {
-            position: relative;
-            max-width: 300px;
-        }
-
-        .search-input {
-            padding: 0.5rem 1rem 0.5rem 2.5rem;
-            border: 2px solid var(--gray-200);
-            border-radius: 0.75rem;
-            width: 100%;
-            font-size: 0.875rem;
-        }
-
-        .table-content {
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .customer-item {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--gray-200);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .customer-item:hover {
-            background: var(--gray-50);
-        }
-
-        .customer-item:last-child {
-            border-bottom: none;
-        }
-
-        .customer-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .customer-name {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .customer-badge {
-            padding: 0.25rem 0.75rem;
-            background: var(--primary-light);
-            color: var(--primary);
-            border-radius: 0.5rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .customer-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            color: var(--gray-600);
-            font-size: 0.875rem;
-        }
-
-        .customer-measurements {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--gray-200);
-            display: none;
-        }
-
-        .customer-measurements.show {
-            display: block;
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        .measurement-item {
-            background: var(--gray-50);
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary);
-        }
-
-        .measurement-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .measurement-date {
-            background: var(--primary);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.5rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .measurement-values {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .measurement-value {
-            background: white;
-            padding: 0.5rem;
-            border-radius: 0.25rem;
-            text-align: center;
-            font-size: 0.75rem;
-        }
-
-        .measurement-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .measurement-card {
-            background: white;
-            border: 2px solid var(--gray-200);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            transition: all 0.2s ease;
-        }
-
-        .measurement-card:focus-within {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-light);
-        }
-
-        .measurement-card label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin-bottom: 0.5rem;
-        }
-
-        .measurement-input {
-            width: 100%;
-            padding: 0.5rem;
-            border: none;
-            background: transparent;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .measurement-input:focus {
-            outline: none;
-        }
-
-        .measurement-unit {
-            font-size: 0.75rem;
-            color: var(--gray-500);
-        }
-
-        @media (max-width: 1024px) {
-            .main-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                padding: 1rem;
-            }
-            .sidebar {
-                position: relative;
-                top: 0;
-            }
-            .header {
-                padding: 1rem;
-            }
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        .app-container { min-height: 100vh; backdrop-filter: blur(20px); background: rgba(255, 255, 255, 0.05); }
+        .header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); padding: 1rem 2rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); position: sticky; top: 0; z-index: 50; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; }
+        .logo-icon { width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; }
+        .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--gray-900); }
+        .header-actions { display: flex; align-items: center; gap: 1rem; }
+        .status-indicator { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; background: var(--success-light); color: var(--success); }
+        .status-dot { width: 0.5rem; height: 0.5rem; background: var(--success); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .main-container { max-width: 1400px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 280px 1fr; gap: 2rem; min-height: calc(100vh - 80px); }
+        .sidebar { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 1rem; padding: 1.5rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); height: fit-content; position: sticky; top: 100px; }
+        .nav-section { margin-bottom: 2rem; }
+        .nav-title { font-size: 0.75rem; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+        .nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 0.75rem; cursor: pointer; transition: all 0.2s ease; margin-bottom: 0.25rem; font-weight: 500; color: var(--gray-600); }
+        .nav-item:hover { background: var(--gray-50); color: var(--gray-900); }
+        .nav-item.active { background: var(--primary-light); color: var(--primary); }
+        .quick-stats { background: var(--gray-50); border-radius: 0.75rem; padding: 1rem; margin-top: 1rem; }
+        .stat-item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; }
+        .stat-item:not(:last-child) { border-bottom: 1px solid var(--gray-200); }
+        .stat-label { font-size: 0.875rem; color: var(--gray-600); }
+        .stat-value { font-weight: 600; color: var(--gray-900); }
+        .content { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 1rem; box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); overflow: hidden; }
+        .content-header { padding: 2rem 2rem 1rem; border-bottom: 1px solid var(--gray-200); }
+        .content-title { font-size: 1.875rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.5rem; }
+        .content-subtitle { color: var(--gray-600); margin-bottom: 1rem; }
+        .section { display: none; padding: 2rem; }
+        .section.active { display: block; animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .dashboard-card { background: white; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid var(--gray-200); transition: all 0.3s ease; }
+        .dashboard-card:hover { transform: translateY(-2px); box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1); }
+        .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .card-title { font-size: 1.125rem; font-weight: 600; color: var(--gray-900); }
+        .card-icon { width: 2.5rem; height: 2.5rem; background: var(--primary-light); color: var(--primary); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .card-value { font-size: 2rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.5rem; }
+        .card-subtitle { color: var(--gray-500); font-size: 0.875rem; }
+        .form-container { background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid var(--gray-200); }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-label { font-size: 0.875rem; font-weight: 600; color: var(--gray-700); margin-bottom: 0.5rem; }
+        .form-input { padding: 0.75rem 1rem; border: 2px solid var(--gray-200); border-radius: 0.75rem; font-size: 1rem; transition: all 0.2s ease; background: white; }
+        .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+        .form-textarea { resize: vertical; min-height: 100px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border: none; border-radius: 0.75rem; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; text-decoration: none; position: relative; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover:not(:disabled) { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); }
+        .btn-secondary { background: var(--gray-100); color: var(--gray-700); }
+        .btn-secondary:hover:not(:disabled) { background: var(--gray-200); }
+        .loading-spinner { width: 1rem; height: 1rem; border: 2px solid transparent; border-top: 2px solid currentColor; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .alert { padding: 1rem 1.5rem; border-radius: 0.75rem; margin: 1rem 0; display: flex; align-items: center; gap: 0.75rem; font-weight: 500; animation: slideIn 0.3s ease; position: relative; z-index: 100; }
+        @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .alert-success { background: var(--success-light); color: var(--success); border: 1px solid #a7f3d0; }
+        .alert-error { background: var(--error-light); color: var(--error); border: 1px solid #fecaca; }
+        .alert-warning { background: var(--warning-light); color: var(--warning); border: 1px solid #fed7aa; }
+        .alert-info { background: var(--primary-light); color: var(--primary); border: 1px solid #c7d2fe; }
+        .data-table { background: white; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid var(--gray-200); }
+        .table-header { background: var(--gray-50); padding: 1.5rem; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; }
+        .table-title { font-size: 1.125rem; font-weight: 600; color: var(--gray-900); }
+        .search-box { position: relative; max-width: 300px; }
+        .search-input { padding: 0.5rem 1rem 0.5rem 2.5rem; border: 2px solid var(--gray-200); border-radius: 0.75rem; width: 100%; font-size: 0.875rem; }
+        .table-content { max-height: 500px; overflow-y: auto; }
+        .customer-item, .order-item { padding: 1.5rem; border-bottom: 1px solid var(--gray-200); cursor: pointer; transition: all 0.2s ease; }
+        .customer-item:hover, .order-item:hover { background: var(--gray-50); }
+        .customer-item:last-child, .order-item:last-child { border-bottom: none; }
+        .customer-header, .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+        .customer-name, .order-id { font-size: 1.125rem; font-weight: 600; color: var(--gray-900); }
+        .customer-badge, .order-status { padding: 0.25rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; }
+        .customer-badge { background: var(--primary-light); color: var(--primary); }
+        .status-pending { background: var(--warning-light); color: var(--warning); }
+        .status-in-progress { background: #eff6ff; color: #3b82f6; }
+        .status-completed { background: var(--success-light); color: var(--success); }
+        .customer-details, .order-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; color: var(--gray-600); font-size: 0.875rem; }
+        .customer-measurements { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray-200); display: none; }
+        .customer-measurements.show { display: block; animation: fadeIn 0.3s ease-in; }
+        .measurement-item { background: var(--gray-50); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; border-left: 4px solid var(--primary); }
+        .measurement-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .measurement-date { background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; }
+        .measurement-values { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem; margin-top: 0.5rem; }
+        .measurement-value { background: white; padding: 0.5rem; border-radius: 0.25rem; text-align: center; font-size: 0.75rem; }
+        .measurement-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .measurement-card { background: white; border: 2px solid var(--gray-200); border-radius: 0.75rem; padding: 1rem; transition: all 0.2s ease; }
+        .measurement-card:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+        .measurement-card label { display: block; font-size: 0.875rem; font-weight: 600; color: var(--gray-700); margin-bottom: 0.5rem; }
+        .measurement-input { width: 100%; padding: 0.5rem; border: none; background: transparent; font-size: 1rem; font-weight: 600; color: var(--gray-900); }
+        .measurement-input:focus { outline: none; }
+        .measurement-unit { font-size: 0.75rem; color: var(--gray-500); }
+        .image-upload-area { border: 2px dashed var(--gray-300); border-radius: 0.75rem; padding: 2rem; text-align: center; transition: all 0.2s ease; background: var(--gray-50); margin: 1rem 0; }
+        .image-upload-area:hover { border-color: var(--primary); background: var(--primary-light); }
+        @media (max-width: 1024px) { .main-container { grid-template-columns: 1fr; gap: 1rem; padding: 1rem; } .sidebar { position: relative; top: 0; } .header { padding: 1rem; } .dashboard-grid { grid-template-columns: 1fr; } .form-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- Header -->
         <header class="header">
             <div class="header-content">
                 <div class="logo">
@@ -669,9 +149,7 @@
             </div>
         </header>
 
-        <!-- Main Container -->
         <div class="main-container">
-            <!-- Sidebar -->
             <aside class="sidebar">
                 <nav class="nav-section">
                     <div class="nav-title">Overview</div>
@@ -679,7 +157,6 @@
                         <span>📊</span> Dashboard
                     </div>
                 </nav>
-
                 <nav class="nav-section">
                     <div class="nav-title">Customers</div>
                     <div class="nav-item" onclick="showSection('add-customer')">
@@ -689,18 +166,29 @@
                         <span>👥</span> All Customers
                     </div>
                 </nav>
-
+                <nav class="nav-section">
+                    <div class="nav-title">Orders</div>
+                    <div class="nav-item" onclick="showSection('add-order')">
+                        <span>📝</span> New Order
+                    </div>
+                    <div class="nav-item" onclick="showSection('orders')">
+                        <span>📋</span> All Orders
+                    </div>
+                </nav>
                 <nav class="nav-section">
                     <div class="nav-title">Measurements</div>
                     <div class="nav-item" onclick="showSection('measurements')">
                         <span>📏</span> New Measurement
                     </div>
                 </nav>
-
                 <div class="quick-stats">
                     <div class="stat-item">
                         <span class="stat-label">Total Customers</span>
                         <span class="stat-value" id="sidebar-customers">3</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Active Orders</span>
+                        <span class="stat-value" id="sidebar-orders">1</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">This Month</span>
@@ -713,17 +201,13 @@
                 </div>
             </aside>
 
-            <!-- Content Area -->
             <main class="content">
-                <!-- Dashboard Section -->
                 <section id="dashboard" class="section active">
                     <div class="content-header">
                         <h1 class="content-title">Dashboard</h1>
-                        <p class="content-subtitle">Welcome to your boutique management system. Here's your business overview.</p>
+                        <p class="content-subtitle">Welcome to your boutique management system.</p>
                     </div>
-
                     <div id="dashboard-alerts"></div>
-
                     <div class="dashboard-grid">
                         <div class="dashboard-card">
                             <div class="card-header">
@@ -733,7 +217,14 @@
                             <div class="card-value" id="dash-customers">3</div>
                             <p class="card-subtitle">Active customer database</p>
                         </div>
-
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Active Orders</h3>
+                                <div class="card-icon">📋</div>
+                            </div>
+                            <div class="card-value" id="dash-orders">1</div>
+                            <p class="card-subtitle">Orders in progress</p>
+                        </div>
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <h3 class="card-title">This Month</h3>
@@ -742,16 +233,6 @@
                             <div class="card-value" id="dash-month">2</div>
                             <p class="card-subtitle">New customers added</p>
                         </div>
-
-                        <div class="dashboard-card">
-                            <div class="card-header">
-                                <h3 class="card-title">Measurements</h3>
-                                <div class="card-icon">📏</div>
-                            </div>
-                            <div class="card-value" id="dash-measurements">2</div>
-                            <p class="card-subtitle">Total measurements taken</p>
-                        </div>
-
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <h3 class="card-title">Quick Actions</h3>
@@ -761,23 +242,20 @@
                                 <button class="btn btn-primary" onclick="showSection('add-customer')" style="font-size: 0.75rem; padding: 0.5rem 1rem;">
                                     <span>👤</span> Add Customer
                                 </button>
-                                <button class="btn btn-secondary" onclick="showSection('measurements')" style="font-size: 0.75rem; padding: 0.5rem 1rem;">
-                                    <span>📏</span> Take Measurement
+                                <button class="btn btn-secondary" onclick="showSection('add-order')" style="font-size: 0.75rem; padding: 0.5rem 1rem;">
+                                    <span>📝</span> New Order
                                 </button>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- Add Customer Section -->
                 <section id="add-customer" class="section">
                     <div class="content-header">
                         <h1 class="content-title">Add New Customer</h1>
-                        <p class="content-subtitle">Create a comprehensive customer profile with contact details and preferences.</p>
+                        <p class="content-subtitle">Create a comprehensive customer profile.</p>
                     </div>
-
                     <div id="customer-alerts"></div>
-
                     <form id="customer-form" class="form-container">
                         <div class="form-grid">
                             <div class="form-group">
@@ -807,15 +285,12 @@
                     </form>
                 </section>
 
-                <!-- Customers Section -->
                 <section id="customers" class="section">
                     <div class="content-header">
                         <h1 class="content-title">Customer Database</h1>
-                        <p class="content-subtitle">Search and manage all your customers with their complete measurement history.</p>
+                        <p class="content-subtitle">Search and manage all your customers.</p>
                     </div>
-
                     <div id="customer-list-alerts"></div>
-
                     <div class="data-table">
                         <div class="table-header">
                             <h3 class="table-title">All Customers</h3>
@@ -824,22 +299,104 @@
                                 <input type="text" id="search-customers" class="search-input" placeholder="Search customers..." oninput="searchCustomers(this.value)">
                             </div>
                         </div>
-                        <div class="table-content" id="customer-list">
-                            <!-- Sample customers will be displayed here -->
-                        </div>
+                        <div class="table-content" id="customer-list"></div>
                     </div>
                 </section>
 
-                <!-- Measurements Section -->
+                <section id="add-order" class="section">
+                    <div class="content-header">
+                        <h1 class="content-title">New Order</h1>
+                        <p class="content-subtitle">Create a new order with customer details and garment specifications.</p>
+                    </div>
+                    <div id="order-alerts"></div>
+                    <form id="order-form" class="form-container">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Select Customer *</label>
+                                <select id="order-customer" class="form-input" required>
+                                    <option value="">Choose a customer...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Order Date *</label>
+                                <input type="date" id="order-date" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Estimated Delivery *</label>
+                                <input type="date" id="order-delivery" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Garment Type *</label>
+                                <select id="order-garment" class="form-input" required>
+                                    <option value="">Select garment type...</option>
+                                    <option value="Saree Blouse">Saree Blouse</option>
+                                    <option value="Lehenga Choli">Lehenga Choli</option>
+                                    <option value="Anarkali Suit">Anarkali Suit</option>
+                                    <option value="Indo-Western Dress">Indo-Western Dress</option>
+                                    <option value="Gown">Gown</option>
+                                    <option value="Kurti">Kurti</option>
+                                    <option value="Alterations">Alterations</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Order Amount (₹) *</label>
+                                <input type="number" id="order-amount" class="form-input" placeholder="5000" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Order Status</label>
+                                <select id="order-status" class="form-input">
+                                    <option value="pending">Pending</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Order Notes & Design Details</label>
+                            <textarea id="order-notes" class="form-input form-textarea" placeholder="Design specifications, fabric details, special requirements..." rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Reference Images</label>
+                            <div class="image-upload-area" onclick="document.getElementById('image-input').click()">
+                                <div>
+                                    <span style="font-size: 2rem; display: block; margin-bottom: 0.5rem;">📸</span>
+                                    <p style="font-weight: 600; margin-bottom: 0.5rem;">Click to upload images</p>
+                                    <p style="font-size: 0.875rem; color: var(--gray-500);">PNG, JPG up to 10MB each</p>
+                                </div>
+                                <input type="file" id="image-input" multiple accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="order-submit-btn">
+                            <span>📝</span> Create Order
+                        </button>
+                    </form>
+                </section>
+
+                <section id="orders" class="section">
+                    <div class="content-header">
+                        <h1 class="content-title">Order Management</h1>
+                        <p class="content-subtitle">Track and manage all orders.</p>
+                    </div>
+                    <div id="order-list-alerts"></div>
+                    <div class="data-table">
+                        <div class="table-header">
+                            <h3 class="table-title">All Orders</h3>
+                            <div class="search-box">
+                                <span style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--gray-400);">🔍</span>
+                                <input type="text" id="search-orders" class="search-input" placeholder="Search orders..." oninput="searchOrders(this.value)">
+                            </div>
+                        </div>
+                        <div class="table-content" id="order-list"></div>
+                    </div>
+                </section>
+
                 <section id="measurements" class="section">
                     <div class="content-header">
                         <h1 class="content-title">New Measurement</h1>
                         <p class="content-subtitle">Record detailed measurements for a customer's order.</p>
                     </div>
-
                     <div id="measurement-alerts"></div>
-
-                    <form id="measurement-form" class="form-container" onsubmit="handleMeasurementSubmit(event)">
+                    <form id="measurement-form" class="form-container">
                         <div class="form-grid">
                             <div class="form-group">
                                 <label class="form-label">Select Customer *</label>
@@ -866,12 +423,16 @@
                                 </select>
                             </div>
                         </div>
-
                         <h3 class="card-title" style="margin: 2rem 0 1rem;">Measurements</h3>
                         <div class="measurement-grid">
                             <div class="measurement-card">
                                 <label>Bust/Chest (inches)</label>
                                 <input type="number" id="bust" class="measurement-input" step="0.25" placeholder="34.5">
+                                <span class="measurement-unit">inches</span>
+                            </div>
+                            <div class="measurement-card">
+                                <label>Waist (inches)</label>
+                                <input type="number" id="waist" class="measurement-input" step="0.25" placeholder="28.0">
                                 <span class="measurement-unit">inches</span>
                             </div>
                             <div class="measurement-card">
@@ -905,13 +466,11 @@
                                 <span class="measurement-unit">inches</span>
                             </div>
                         </div>
-
                         <div class="form-group" style="margin-top: 2rem;">
                             <label class="form-label">Measurement Notes</label>
                             <textarea id="measurement-notes" class="form-input form-textarea" placeholder="Special instructions, fitting preferences, design details..." rows="4"></textarea>
                         </div>
-
-                        <button type="submit" class="btn btn-primary" id="measurement-submit-btn">
+                        <button type="button" class="btn btn-primary" id="measurement-submit-btn">
                             <span>💾</span> Save Measurements
                         </button>
                     </form>
@@ -921,9 +480,6 @@
     </div>
 
     <script>
-        console.log('🚀 Life n Style Management System Loading...');
-
-        // Sample data
         const sampleData = {
             customers: [
                 { id: 1, name: "Priya Sharma", phone: "+91 9876543210", email: "priya@email.com", address: "123 MG Road, Bangalore", notes: "Prefers silk fabrics", dateAdded: "2024-01-15" },
@@ -934,35 +490,28 @@
                 { id: 1, customerId: 1, date: "2024-01-20", type: "Blouse", bust: 36, waist: 28, hips: 38, height: 65, notes: "Wedding blouse, deep neck design" },
                 { id: 2, customerId: 2, date: "2024-02-05", type: "Dress", bust: 34, waist: 26, hips: 36, height: 62, notes: "Office wear, professional look" }
             ],
+            orders: [
+                { id: 1, customerId: 1, orderDate: "2024-01-20", deliveryDate: "2024-02-20", garmentType: "Saree Blouse", amount: 3500, status: "in-progress", notes: "Red silk with gold embroidery" }
+            ],
             nextId: 4
         };
 
-        // Application state
         let appData = { ...sampleData };
 
-        // Utility functions
         function showAlert(message, type = 'success', containerId = 'dashboard-alerts') {
             const container = document.getElementById(containerId);
             if (!container) return;
-
             const alert = document.createElement('div');
             alert.className = `alert alert-${type}`;
             const icon = type === 'error' ? '❌' : type === 'warning' ? '⚠️' : type === 'info' ? 'ℹ️' : '✅';
             alert.innerHTML = `<span>${icon}</span><span>${message}</span>`;
-            
             container.appendChild(alert);
-            
-            setTimeout(() => {
-                if (alert.parentNode) {
-                    alert.remove();
-                }
-            }, 5000);
+            setTimeout(() => { if (alert.parentNode) alert.remove(); }, 5000);
         }
 
         function setButtonLoading(buttonId, loading = true) {
             const button = document.getElementById(buttonId);
             if (!button) return;
-
             if (loading) {
                 button.disabled = true;
                 const originalContent = button.innerHTML;
@@ -970,73 +519,32 @@
                 button.innerHTML = '<div class="loading-spinner"></div> Processing...';
             } else {
                 button.disabled = false;
-                if (button.dataset.originalContent) {
-                    button.innerHTML = button.dataset.originalContent;
-                }
+                if (button.dataset.originalContent) button.innerHTML = button.dataset.originalContent;
             }
         }
 
         function isPhoneUnique(phone, excludeId = null) {
-            return !appData.customers.some(customer => 
-                customer.phone === phone && customer.id !== excludeId
-            );
+            return !appData.customers.some(customer => customer.phone === phone && customer.id !== excludeId);
         }
 
-        // Navigation function
         function showSection(sectionId) {
-            console.log('📍 Switching to section:', sectionId);
-            
-            try {
-                // Remove active from all nav items
-                document.querySelectorAll('.nav-item').forEach(item => {
-                    if (item && item.classList) {
-                        item.classList.remove('active');
-                    }
-                });
-                
-                // Add active to clicked nav item
-                if (event && event.target) {
-                    const navItem = event.target.closest('.nav-item');
-                    if (navItem && navItem.classList) {
-                        navItem.classList.add('active');
-                    }
-                }
-
-                // Hide all sections
-                document.querySelectorAll('.section').forEach(section => {
-                    if (section && section.classList) {
-                        section.classList.remove('active');
-                    }
-                });
-                
-                // Show target section
-                const targetSection = document.getElementById(sectionId);
-                if (targetSection && targetSection.classList) {
-                    targetSection.classList.add('active');
-                    console.log('✅ Section shown:', sectionId);
-                } else {
-                    console.error('❌ Section not found:', sectionId);
-                }
-
-                // Update section-specific content
-                if (sectionId === 'customers') {
-                    displayCustomers();
-                } else if (sectionId === 'measurements') {
-                    console.log('🔄 Updating customer dropdown for measurements section');
-                    updateCustomerDropdown();
-                }
-                
-            } catch (error) {
-                console.error('❌ Error in showSection:', error);
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            if (event && event.target) {
+                const navItem = event.target.closest('.nav-item');
+                if (navItem) navItem.classList.add('active');
             }
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) targetSection.classList.add('active');
+            
+            if (sectionId === 'customers') displayCustomers();
+            else if (sectionId === 'measurements') updateCustomerDropdown();
+            else if (sectionId === 'add-order') updateOrderCustomerDropdown();
+            else if (sectionId === 'orders') displayOrders();
         }
 
-        // Customer functions
         function handleCustomerSubmit() {
-            console.log('👤 Customer form submitted');
-            
             setButtonLoading('customer-submit-btn', true);
-            
             const name = document.getElementById('customer-name').value.trim();
             const phone = document.getElementById('customer-phone').value.trim();
             
@@ -1047,7 +555,7 @@
             }
             
             if (!isPhoneUnique(phone)) {
-                showAlert('Phone number already exists! Please use a different number.', 'error', 'customer-alerts');
+                showAlert('Phone number already exists!', 'error', 'customer-alerts');
                 setButtonLoading('customer-submit-btn', false);
                 return;
             }
@@ -1063,35 +571,98 @@
             };
             
             appData.customers.push(customer);
-            
-            // Reset form
             document.getElementById('customer-form').reset();
-            
-            // Update UI
             updateDashboard();
             updateCustomerDropdown();
-            
+            updateOrderCustomerDropdown();
             setButtonLoading('customer-submit-btn', false);
             showAlert(`Customer "${customer.name}" added successfully!`, 'success', 'customer-alerts');
+        }
+
+        function handleOrderSubmit() {
+            setButtonLoading('order-submit-btn', true);
+            const customerId = parseInt(document.getElementById('order-customer').value);
+            const orderDate = document.getElementById('order-date').value;
+            const deliveryDate = document.getElementById('order-delivery').value;
+            const garmentType = document.getElementById('order-garment').value;
+            const amount = parseFloat(document.getElementById('order-amount').value);
+            const status = document.getElementById('order-status').value;
             
-            console.log('✅ Customer added:', customer);
+            if (!customerId || !orderDate || !deliveryDate || !garmentType || !amount) {
+                showAlert('Please fill in all required fields!', 'error', 'order-alerts');
+                setButtonLoading('order-submit-btn', false);
+                return;
+            }
+            
+            const order = {
+                id: appData.nextId++,
+                customerId: customerId,
+                orderDate: orderDate,
+                deliveryDate: deliveryDate,
+                garmentType: garmentType,
+                amount: amount,
+                status: status,
+                notes: document.getElementById('order-notes').value.trim()
+            };
+            
+            appData.orders.push(order);
+            document.getElementById('order-form').reset();
+            document.getElementById('order-date').value = new Date().toISOString().split('T')[0];
+            updateDashboard();
+            updateOrderCustomerDropdown();
+            setButtonLoading('order-submit-btn', false);
+            const customer = appData.customers.find(c => c.id === customerId);
+            showAlert(`Order created for ${customer ? customer.name : 'customer'}!`, 'success', 'order-alerts');
+        }
+
+        function handleMeasurementSubmit() {
+            setButtonLoading('measurement-submit-btn', true);
+            const customerId = parseInt(document.getElementById('measurement-customer').value);
+            const date = document.getElementById('measurement-date').value;
+            const type = document.getElementById('measurement-type').value;
+            
+            if (!customerId || !date || !type) {
+                showAlert('Please fill in required fields!', 'error', 'measurement-alerts');
+                setButtonLoading('measurement-submit-btn', false);
+                return;
+            }
+            
+            const measurement = {
+                id: appData.nextId++,
+                customerId: customerId,
+                date: date,
+                type: type,
+                bust: parseFloat(document.getElementById('bust').value) || null,
+                waist: parseFloat(document.getElementById('waist').value) || null,
+                hips: parseFloat(document.getElementById('hips').value) || null,
+                shoulder: parseFloat(document.getElementById('shoulder').value) || null,
+                armLength: parseFloat(document.getElementById('arm-length').value) || null,
+                neck: parseFloat(document.getElementById('neck').value) || null,
+                inseam: parseFloat(document.getElementById('inseam').value) || null,
+                height: parseFloat(document.getElementById('height').value) || null,
+                notes: document.getElementById('measurement-notes').value.trim()
+            };
+            
+            appData.measurements.push(measurement);
+            const customer = appData.customers.find(c => c.id === customerId);
+            document.getElementById('measurement-form').reset();
+            document.getElementById('measurement-date').value = new Date().toISOString().split('T')[0];
+            updateDashboard();
+            updateCustomerDropdown();
+            setButtonLoading('measurement-submit-btn', false);
+            showAlert(`Measurements saved for ${customer ? customer.name : 'customer'}!`, 'success', 'measurement-alerts');
         }
 
         function displayCustomers() {
             const container = document.getElementById('customer-list');
             if (!container) return;
-
             container.innerHTML = '';
-
             appData.customers.forEach(customer => {
                 const customerMeasurements = appData.measurements.filter(m => m.customerId === customer.id);
-                
                 const div = document.createElement('div');
                 div.className = 'customer-item';
                 div.onclick = () => toggleCustomerDetails(customer.id);
-                
                 const measurementsHtml = buildMeasurementsHTML(customerMeasurements);
-                
                 div.innerHTML = `
                     <div class="customer-header">
                         <h4 class="customer-name">${customer.name}</h4>
@@ -1108,16 +679,38 @@
                         ${measurementsHtml}
                     </div>
                 `;
-                
+                container.appendChild(div);
+            });
+        }
+
+        function displayOrders() {
+            const container = document.getElementById('order-list');
+            if (!container) return;
+            container.innerHTML = '';
+            appData.orders.forEach(order => {
+                const customer = appData.customers.find(c => c.id === order.customerId);
+                const div = document.createElement('div');
+                div.className = 'order-item';
+                div.innerHTML = `
+                    <div class="order-header">
+                        <h4 class="order-id">Order #${order.id} - ${customer ? customer.name : 'Unknown'}</h4>
+                        <span class="order-status status-${order.status}">${order.status.replace('-', ' ')}</span>
+                    </div>
+                    <div class="order-details">
+                        <div><strong>Garment:</strong> ${order.garmentType}</div>
+                        <div><strong>Amount:</strong> ₹${order.amount.toLocaleString()}</div>
+                        <div><strong>Order Date:</strong> ${new Date(order.orderDate).toLocaleDateString()}</div>
+                        <div><strong>Delivery:</strong> ${new Date(order.deliveryDate).toLocaleDateString()}</div>
+                        <div><strong>Phone:</strong> ${customer ? customer.phone : 'N/A'}</div>
+                        <div><strong>Notes:</strong> ${order.notes || 'N/A'}</div>
+                    </div>
+                `;
                 container.appendChild(div);
             });
         }
 
         function buildMeasurementsHTML(measurements) {
-            if (measurements.length === 0) {
-                return '<p style="color: var(--gray-500); font-style: italic;">No measurements recorded yet.</p>';
-            }
-
+            if (measurements.length === 0) return '<p style="color: var(--gray-500); font-style: italic;">No measurements recorded yet.</p>';
             return measurements.map(measurement => {
                 const values = [];
                 if (measurement.bust) values.push(`<div class="measurement-value"><strong>Bust:</strong> ${measurement.bust}"</div>`);
@@ -1128,7 +721,6 @@
                 if (measurement.neck) values.push(`<div class="measurement-value"><strong>Neck:</strong> ${measurement.neck}"</div>`);
                 if (measurement.inseam) values.push(`<div class="measurement-value"><strong>Inseam:</strong> ${measurement.inseam}"</div>`);
                 if (measurement.height) values.push(`<div class="measurement-value"><strong>Height:</strong> ${measurement.height}"</div>`);
-                
                 return `
                     <div class="measurement-item">
                         <div class="measurement-header">
@@ -1144,48 +736,30 @@
 
         function toggleCustomerDetails(customerId) {
             const detailsElement = document.getElementById(`customer-measurements-${customerId}`);
-            if (!detailsElement) {
-                console.warn('Customer details element not found for ID:', customerId);
-                return;
-            }
-
+            if (!detailsElement) return;
             if (detailsElement.classList.contains('show')) {
                 detailsElement.classList.remove('show');
             } else {
-                // Hide all other open details first
-                document.querySelectorAll('.customer-measurements.show').forEach(el => {
-                    if (el && el.classList) {
-                        el.classList.remove('show');
-                    }
-                });
+                document.querySelectorAll('.customer-measurements.show').forEach(el => el.classList.remove('show'));
                 detailsElement.classList.add('show');
             }
         }
 
         function searchCustomers(query) {
-            if (!query.trim()) {
-                displayCustomers();
-                return;
-            }
-
+            if (!query.trim()) { displayCustomers(); return; }
             const filtered = appData.customers.filter(customer =>
                 customer.name.toLowerCase().includes(query.toLowerCase()) ||
                 customer.phone.toLowerCase().includes(query.toLowerCase()) ||
                 (customer.email && customer.email.toLowerCase().includes(query.toLowerCase()))
             );
-            
             const container = document.getElementById('customer-list');
             container.innerHTML = '';
-            
             filtered.forEach(customer => {
                 const customerMeasurements = appData.measurements.filter(m => m.customerId === customer.id);
-                
                 const div = document.createElement('div');
                 div.className = 'customer-item';
                 div.onclick = () => toggleCustomerDetails(customer.id);
-                
                 const measurementsHtml = buildMeasurementsHTML(customerMeasurements);
-                
                 div.innerHTML = `
                     <div class="customer-header">
                         <h4 class="customer-name">${customer.name}</h4>
@@ -1202,314 +776,134 @@
                         ${measurementsHtml}
                     </div>
                 `;
-                
                 container.appendChild(div);
             });
         }
 
-        // Measurement functions
-        function handleMeasurementSubmit() {
-            console.log('🚨 MEASUREMENT FUNCTION CALLED - This should appear first!');
-            console.log('📏 Measurement form submitted');
-            
-            setButtonLoading('measurement-submit-btn', true);
-            
-            // Get form values with debugging
-            const customerSelect = document.getElementById('measurement-customer');
-            const dateField = document.getElementById('measurement-date');
-            const typeField = document.getElementById('measurement-type');
-            
-            console.log('🔍 Form elements check:');
-            console.log('Customer select element:', customerSelect);
-            console.log('Date field element:', dateField);
-            console.log('Type field element:', typeField);
-            
-            if (!customerSelect) {
-                console.error('❌ Customer select element not found!');
-                showAlert('Form error: Customer dropdown not found!', 'error', 'measurement-alerts');
-                setButtonLoading('measurement-submit-btn', false);
-                return;
-            }
-            
-            if (!dateField) {
-                console.error('❌ Date field element not found!');
-                showAlert('Form error: Date field not found!', 'error', 'measurement-alerts');
-                setButtonLoading('measurement-submit-btn', false);
-                return;
-            }
-            
-            if (!typeField) {
-                console.error('❌ Type field element not found!');
-                showAlert('Form error: Type field not found!', 'error', 'measurement-alerts');
-                setButtonLoading('measurement-submit-btn', false);
-                return;
-            }
-            
-            console.log('Customer select value:', customerSelect.value);
-            console.log('Date field value:', dateField.value);
-            console.log('Type field value:', typeField.value);
-            
-            const customerId = parseInt(customerSelect.value);
-            const date = dateField.value;
-            const type = typeField.value;
-            
-            if (!customerId || isNaN(customerId)) {
-                console.log('❌ Validation failed: No customer selected');
-                showAlert('Please select a customer!', 'error', 'measurement-alerts');
-                setButtonLoading('measurement-submit-btn', false);
-                return;
-            }
-            if (!date) {
-                console.log('❌ Validation failed: No date selected');
-                showAlert('Please select a date!', 'error', 'measurement-alerts');
-                setButtonLoading('measurement-submit-btn', false);
-                return;
-            }
-            if (!type) {
-                console.log('❌ Validation failed: No type selected');
-                showAlert('Please select a garment type!', 'error', 'measurement-alerts');
-                setButtonLoading('measurement-submit-btn', false);
-                return;
-            }
-            
-            console.log('✅ Validation passed, creating measurement...');
-            
-            // Get measurement values
-            const bustField = document.getElementById('bust');
-            const waistField = document.getElementById('waist');
-            const hipsField = document.getElementById('hips');
-            
-            console.log('Measurement fields found:', {
-                bust: bustField ? 'YES' : 'NO',
-                waist: waistField ? 'YES' : 'NO',
-                hips: hipsField ? 'YES' : 'NO'
-            });
-            
-            const measurement = {
-                id: appData.nextId++,
-                customerId: customerId,
-                date: date,
-                type: type,
-                bust: bustField ? (parseFloat(bustField.value) || null) : null,
-                waist: waistField ? (parseFloat(waistField.value) || null) : null,
-                hips: hipsField ? (parseFloat(hipsField.value) || null) : null,
-                shoulder: document.getElementById('shoulder') ? (parseFloat(document.getElementById('shoulder').value) || null) : null,
-                armLength: document.getElementById('arm-length') ? (parseFloat(document.getElementById('arm-length').value) || null) : null,
-                neck: document.getElementById('neck') ? (parseFloat(document.getElementById('neck').value) || null) : null,
-                inseam: document.getElementById('inseam') ? (parseFloat(document.getElementById('inseam').value) || null) : null,
-                height: document.getElementById('height') ? (parseFloat(document.getElementById('height').value) || null) : null,
-                notes: document.getElementById('measurement-notes') ? document.getElementById('measurement-notes').value.trim() : ''
-            };
-            
-            console.log('📋 Creating measurement object:', measurement);
-            
-            try {
-                appData.measurements.push(measurement);
-                console.log('✅ Measurement added to array');
-                console.log('📊 Total measurements now:', appData.measurements.length);
-                
-                const customer = appData.customers.find(c => c.id === customerId);
-                console.log('👤 Customer found:', customer);
-                
-                // Reset form but keep today's date
-                document.getElementById('measurement-form').reset();
-                document.getElementById('measurement-date').value = new Date().toISOString().split('T')[0];
-                console.log('🔄 Form reset');
-                
-                // Update UI
-                updateDashboard();
-                updateCustomerDropdown(); // Repopulate dropdown
-                console.log('📊 UI updated');
-                
-                setButtonLoading('measurement-submit-btn', false);
-                showAlert(`Measurements saved for ${customer ? customer.name : 'customer'}!`, 'success', 'measurement-alerts');
-                
-                console.log('🎉 SUCCESS: Measurement saved successfully!');
-                
-            } catch (error) {
-                console.error('💥 ERROR saving measurement:', error);
-                showAlert('Error saving measurement: ' + error.message, 'error', 'measurement-alerts');
-                setButtonLoading('measurement-submit-btn', false);
-            }
-        }
+        function searchOrders(query) { if (!query.trim()) { displayOrders(); return; } displayOrders(); }
 
         function updateCustomerDropdown() {
             const select = document.getElementById('measurement-customer');
-            if (!select) {
-                console.warn('Customer dropdown not found');
-                return;
-            }
-
+            if (!select) return;
             select.innerHTML = '<option value="">Choose a customer...</option>';
-            
             appData.customers.forEach(customer => {
                 const option = document.createElement('option');
                 option.value = customer.id;
                 option.textContent = `${customer.name} (${customer.phone})`;
                 select.appendChild(option);
             });
-            
-            console.log('✅ Customer dropdown updated with', appData.customers.length, 'customers');
         }
 
-        // Dashboard functions
+        function updateOrderCustomerDropdown() {
+            const select = document.getElementById('order-customer');
+            if (!select) return;
+            select.innerHTML = '<option value="">Choose a customer...</option>';
+            appData.customers.forEach(customer => {
+                const option = document.createElement('option');
+                option.value = customer.id;
+                option.textContent = `${customer.name} (${customer.phone})`;
+                select.appendChild(option);
+            });
+        }
+
         function updateDashboard() {
             const currentMonth = new Date().toISOString().substr(0, 7);
+            const activeOrders = appData.orders.filter(o => o.status !== 'completed').length;
             const stats = {
                 totalCustomers: appData.customers.length,
                 totalMeasurements: appData.measurements.length,
+                activeOrders: activeOrders,
                 thisMonth: appData.customers.filter(c => c.dateAdded.startsWith(currentMonth)).length
             };
             
             const elements = [
                 { id: 'sidebar-customers', value: stats.totalCustomers },
                 { id: 'sidebar-measurements', value: stats.totalMeasurements },
+                { id: 'sidebar-orders', value: stats.activeOrders },
                 { id: 'sidebar-month', value: stats.thisMonth },
                 { id: 'dash-customers', value: stats.totalCustomers },
                 { id: 'dash-measurements', value: stats.totalMeasurements },
+                { id: 'dash-orders', value: stats.activeOrders },
                 { id: 'dash-month', value: stats.thisMonth }
             ];
 
             elements.forEach(item => {
                 const element = document.getElementById(item.id);
-                if (element) {
-                    element.textContent = item.value;
-                } else {
-                    console.warn('Dashboard element not found:', item.id);
-                }
+                if (element) element.textContent = item.value;
             });
-            
-            console.log('📊 Dashboard updated:', stats);
         }
 
-        // Export function
         function exportData() {
-            console.log('📥 Export function called');
-            
             if (typeof XLSX === 'undefined') {
                 showAlert('Excel export feature requires XLSX library', 'error');
                 return;
             }
-            
             try {
                 const wb = XLSX.utils.book_new();
-                
-                // Customers sheet
                 const customersData = appData.customers.map(customer => ({
-                    'Customer ID': customer.id,
-                    'Name': customer.name,
-                    'Phone': customer.phone,
-                    'Email': customer.email || '',
-                    'Address': customer.address || '',
-                    'Notes': customer.notes || '',
-                    'Date Added': customer.dateAdded
+                    'Customer ID': customer.id, 'Name': customer.name, 'Phone': customer.phone,
+                    'Email': customer.email || '', 'Address': customer.address || '',
+                    'Notes': customer.notes || '', 'Date Added': customer.dateAdded
                 }));
-                
                 const customersWs = XLSX.utils.json_to_sheet(customersData);
                 XLSX.utils.book_append_sheet(wb, customersWs, 'Customers');
                 
-                // Measurements sheet
+                const ordersData = appData.orders.map(order => {
+                    const customer = appData.customers.find(c => c.id === order.customerId);
+                    return {
+                        'Order ID': order.id, 'Customer Name': customer ? customer.name : 'Unknown',
+                        'Garment Type': order.garmentType, 'Amount': order.amount, 'Status': order.status,
+                        'Order Date': order.orderDate, 'Delivery Date': order.deliveryDate,
+                        'Notes': order.notes || ''
+                    };
+                });
+                const ordersWs = XLSX.utils.json_to_sheet(ordersData);
+                XLSX.utils.book_append_sheet(wb, ordersWs, 'Orders');
+                
                 const measurementsData = appData.measurements.map(measurement => {
                     const customer = appData.customers.find(c => c.id === measurement.customerId);
                     return {
-                        'Measurement ID': measurement.id,
-                        'Customer Name': customer ? customer.name : 'Unknown',
-                        'Date': measurement.date,
-                        'Type': measurement.type,
-                        'Bust': measurement.bust || '',
-                        'Waist': measurement.waist || '',
-                        'Hips': measurement.hips || '',
-                        'Shoulder': measurement.shoulder || '',
-                        'Arm Length': measurement.armLength || '',
-                        'Neck': measurement.neck || '',
-                        'Inseam': measurement.inseam || '',
-                        'Height': measurement.height || '',
-                        'Notes': measurement.notes || ''
+                        'Measurement ID': measurement.id, 'Customer Name': customer ? customer.name : 'Unknown',
+                        'Date': measurement.date, 'Type': measurement.type,
+                        'Bust': measurement.bust || '', 'Waist': measurement.waist || '', 'Hips': measurement.hips || '',
+                        'Shoulder': measurement.shoulder || '', 'Arm Length': measurement.armLength || '',
+                        'Neck': measurement.neck || '', 'Inseam': measurement.inseam || '',
+                        'Height': measurement.height || '', 'Notes': measurement.notes || ''
                     };
                 });
-                
                 const measurementsWs = XLSX.utils.json_to_sheet(measurementsData);
                 XLSX.utils.book_append_sheet(wb, measurementsWs, 'Measurements');
                 
                 const filename = `life_n_style_data_${new Date().toISOString().split('T')[0]}.xlsx`;
                 XLSX.writeFile(wb, filename);
-                
                 showAlert('Data exported successfully! 📊', 'success');
             } catch (error) {
-                console.error('Export error:', error);
                 showAlert('Error exporting data', 'error');
             }
         }
 
-        // Initialize application
         window.addEventListener('load', function() {
-            console.log('🎯 Application loaded successfully');
-            
-            // Set today's date
             const today = new Date().toISOString().split('T')[0];
-            const dateField = document.getElementById('measurement-date');
-            if (dateField) {
-                dateField.value = today;
-                console.log('✅ Date field set to:', today);
-            } else {
-                console.error('❌ Date field not found');
-            }
+            document.getElementById('measurement-date').value = today;
+            document.getElementById('order-date').value = today;
             
-            // Initialize UI
             updateDashboard();
             updateCustomerDropdown();
+            updateOrderCustomerDropdown();
             displayCustomers();
+            displayOrders();
             
-            // CRITICAL: Add event handlers programmatically
-            console.log('🔧 Setting up event handlers...');
+            document.getElementById('customer-submit-btn').addEventListener('click', function(e) {
+                e.preventDefault(); handleCustomerSubmit();
+            });
+            document.getElementById('order-submit-btn').addEventListener('click', function(e) {
+                e.preventDefault(); handleOrderSubmit();
+            });
+            document.getElementById('measurement-submit-btn').addEventListener('click', function(e) {
+                e.preventDefault(); handleMeasurementSubmit();
+            });
             
-            // Customer button handler
-            const customerBtn = document.getElementById('customer-submit-btn');
-            if (customerBtn) {
-                customerBtn.addEventListener('click', function(e) {
-                    console.log('🧪 CUSTOMER BUTTON CLICKED PROGRAMMATICALLY!');
-                    e.preventDefault();
-                    handleCustomerSubmit();
-                });
-                console.log('✅ Customer button handler added');
-            } else {
-                console.error('❌ Customer button not found');
-            }
-            
-            // Measurement button handler
-            const measurementBtn = document.getElementById('measurement-submit-btn');
-            if (measurementBtn) {
-                measurementBtn.addEventListener('click', function(e) {
-                    console.log('🧪 MEASUREMENT BUTTON CLICKED PROGRAMMATICALLY!');
-                    e.preventDefault();
-                    handleMeasurementSubmit();
-                });
-                console.log('✅ Measurement button handler added');
-            } else {
-                console.error('❌ Measurement button not found');
-            }
-            
-            // Export button handler
-            const exportBtn = document.querySelector('button[onclick*="exportData"]');
-            if (exportBtn) {
-                exportBtn.removeAttribute('onclick'); // Remove inline handler
-                exportBtn.addEventListener('click', function(e) {
-                    console.log('🧪 EXPORT BUTTON CLICKED PROGRAMMATICALLY!');
-                    e.preventDefault();
-                    exportData();
-                });
-                console.log('✅ Export button handler added');
-            }
-            
-            console.log('🎯 All event handlers setup complete!');
-            
-            // Show welcome message
-            setTimeout(() => {
-                showAlert('Welcome to Life n Style! System ready for use. 🎉', 'info', 'dashboard-alerts');
-            }, 1000);
-            
-            console.log('✅ Life n Style Management System Ready!');
-            console.log('Current data:', appData);
+            showAlert('Life n Style Management System Ready! 🎉', 'success', 'dashboard-alerts');
         });
     </script>
 </body>
