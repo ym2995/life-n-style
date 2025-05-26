@@ -547,6 +547,13 @@
             border-radius: 0.5rem;
             margin-bottom: 1rem;
             border-left: 4px solid var(--primary);
+            transition: all 0.2s ease;
+        }
+
+        .measurement-item:hover {
+            background: var(--gray-100);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .measurement-header {
@@ -1550,7 +1557,7 @@
             }
 
             return orders.map(order => `
-                <div class="measurement-item" style="border-left-color: var(--info);">
+                <div class="measurement-item" style="border-left-color: var(--info); cursor: pointer;" onclick="viewOrderDetails(${order.id})">
                     <div class="measurement-header">
                         <strong>Order #${order.id} - ${order.garmentType}</strong>
                         <span class="order-status status-${order.status}">${order.status.replace('-', ' ')}</span>
@@ -1561,6 +1568,9 @@
                         <div class="measurement-value"><strong>Delivery:</strong> ${new Date(order.deliveryDate).toLocaleDateString()}</div>
                     </div>
                     ${order.notes ? `<p style="margin-top: 0.5rem;"><strong>Notes:</strong> ${order.notes}</p>` : ''}
+                    <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--primary); font-weight: 600;">
+                        👁️ Click to view full order details
+                    </div>
                 </div>
             `).join('');
         }
